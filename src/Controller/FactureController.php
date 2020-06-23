@@ -47,10 +47,7 @@ class FactureController extends AbstractController
         $formfacture= $this->createForm( FactureType::class, $facture);
         $formfacture->handleRequest($request);
 
-       // if($detailfacture->getId())
-       //{
-           // $detailfacture = $repodetailsfacture->find($id);
-       // }
+      
 
         $formdetailfacture= $this->createForm( ArticleFactureType::class, $detailfacture );
         $formdetailfacture->handleRequest($request);

@@ -18,6 +18,8 @@ class Article
      */
     private $id;
 
+    private $iddd;
+
     /**
      * @ORM\Column(type="text")
      */
