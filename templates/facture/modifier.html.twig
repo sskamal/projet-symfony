@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle FACTURE{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <table class="table table-bordered">
+            <thead>
+
+            <tr>
+                <th colspan="4">Facture N°: {{ facture.getIdFacture() }}  </th>
+            </tr>
+
+            </thead>
+
+            <tbody>
+            {{ form_start(formfacture)  }}
+            <tr>
+                <td>{{ form_row(formfacture.id_facture) }}</td>
+                <td>{{ form_row(formfacture.createdAt) }}</td>
+                <td>Client</td>
+                <td><button type="submit" class="btn btn-primary"> Ajouter </button></td>
+            </tr>
+
+            <tr>
+                <th scope="row">3</th>
+                <td colspan="2">Larry the Bird </td>
+
+                <td>{{ form_row(formfacture.total) }}  </td>
+                {{ form_end(formfacture) }}
+
+            </tr>
+
+            {{ form_start(formdetailfacture)  }}
+
+            <tr>
+                <th colspan="4">{{ form_row(formdetailfacture.articles)  }}  </th>
+            </tr>
+
+            <tr>
+                <td>{{ form_row(formdetailfacture.quantite)  }}</td>
+                <td>{{ form_row(formdetailfacture.prix)  }}</td>
+                <td>{{ form_row(formdetailfacture.description , { 'value': 'hhhh' })  }}  </td>
+                <td><button type="submit" class="btn btn-primary"> Ajouter </button></td>
+            </tr>
+
+            {{ form_end(formdetailfacture) }}
+
+
+            <tr>
+                <td colspan="4">
+
+                <table border="1" width="100%">
+
+                    {% for detail in facture.factureArticles %}
+
+                    <tr>
+                        <td>{{ detail.id }} </td>
+                        <td>{{ detail.quantite }}</td>
+                        <td>{{ detail.prix }}</td>
+                        <td>  {{ detail.articles.description }}  </td>
+                    </tr>
+                    {% endfor %}
+
+
+                </table>
+
+                </td>
+
+            </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+
+
+{% endblock %}

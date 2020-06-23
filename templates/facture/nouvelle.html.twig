@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle FACTURE{% endblock %}
+
+{% block body %}
+
+    <div class="example-wrapper">
+        <h1>Nouvelle FACTURE ✅</h1>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+
+                <h3>Facture N°</h3>
+                {{ form_start(formfacture)  }}
+                <table>
+                    <tr><td>{{ form_row(formfacture.id_facture) }}</td><td>{{ form_row(formfacture.createdAt) }}</td><td><button type="submit" class="btn btn-primary"> Ajouter </button></td></tr>
+                </table>
+                {{ form_end(formfacture) }}
+<hr>
+            </div>
+
+
+
+            <div class="w-100"></div>
+            <div class="col">
+                <h3>Détails</h3>
+                {{ form_start(form)  }}
+
+                {{ form_row(form.articles)  }}
+                {{ form_row(form.quantite)  }}
+                {{ form_row(form.prix)  }}
+
+                <button type="submit" class="btn btn-primary"> Ajouter </button>
+
+                {{ form_end(form) }}
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+{% endblock %}

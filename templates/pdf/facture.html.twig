@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste factures{% endblock %}
+
+{% block body %}
+
+    <h2>Impression pdf</h2>
+
+    <table border="1" width="120%">
+
+            <tr><td>Id</td><td>N° Facture</td> <td>Date</td> <td>Total(Dhs)</td></tr>
+            <tr><td>{{ factures.id }}</td> <td>{{ factures.getIdFacture() }} </td> <td>{{ factures.createdAt | date('m/d/y') }}</td> <td>{{ factures.total }}</td></tr>
+
+
+
+        <tr>
+            <td colspan="4">
+
+            <table border="1" width="100%">
+                {% for lignefacture in factures.factureArticles  %}
+                <tr>
+                    <td>{{ lignefacture.id }}</td> <td>{{ lignefacture.description }}</td> <td>{{ lignefacture.quantite }}</td> <td> {{ lignefacture.prix }}</td><td>{{ lignefacture.total }}</td>
+
+                </tr>
+
+                {% endfor %}
+            </table>
+
+            </td>
+        </tr>
+
+    </table>
+
+{% endblock %}

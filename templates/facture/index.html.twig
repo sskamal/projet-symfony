@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste factures{% endblock %}
+
+{% block body %}
+
+<h2>Liste factures</h2>
+
+<table border="1" width="70%">
+
+    <tr>
+        <td>Id</td>
+        <td>N°Facture</td>
+        <td>Date</td>
+        <td>Total</td>
+        <td>Remarque</td>
+        <td>Actions</td>
+    </tr>
+
+    {% for facture in factures %}
+<tr>
+    <td>{{ facture.id }}</td>
+    <td>{{ facture.getIdFacture() }}</td>
+    <td>{{ facture.createdAt | date('m/d/y') }}</td>
+    <td>{{ facture.total }}</td>
+    <td>Remarque</td>
+    <td><a class="badge badge-success" href="{{ path('edit_facture', {'id' : facture.id}) }}">Edité</a> <a class="badge badge-danger" href="{{ path('showpdf', {'id' : facture.id}) }}">Apercu</a> <a class="badge badge-danger" href="#">Supprimer</a> </td>
+</tr>
+
+    {% endfor %}
+
+</table>
+
+{% endblock %}
