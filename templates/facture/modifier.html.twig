@@ -1,80 +1,126 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nouvelle FACTURE{% endblock %}
+{% block title %}Nouvelle FACTURE
+{% endblock %}
 
 {% block body %}
 
-    <div class="container">
+	<div class="container">
 
-        <table class="table table-bordered">
-            <thead>
+		<table class="table table-bordered">
+			<thead>
 
-            <tr>
-                <th colspan="4">Facture N°: {{ facture.getIdFacture() }}  </th>
-            </tr>
+				<tr>
+					<th colspan="4">Facture N°:
+						{{ facture.getIdFacture() }}
+					</th>
+				</tr>
 
-            </thead>
+			</thead>
 
-            <tbody>
-            {{ form_start(formfacture)  }}
-            <tr>
-                <td>{{ form_row(formfacture.id_facture) }}</td>
-                <td>{{ form_row(formfacture.createdAt) }}</td>
-                <td>Client</td>
-                <td><button type="submit" class="btn btn-primary"> Ajouter </button></td>
-            </tr>
+			<tbody>
+				{{ form_start(formfacture)  }}
+				<tr>
+					<td>{{ form_row(formfacture.id_facture) }}</td>
+					<td>{{ form_row(formfacture.createdAt) }}</td>
+					<td>Client</td>
+					<td>
+						<button type="submit" class="btn btn-primary">
+							Ajouter
+						</button>
+					</td>
+				</tr>
 
-            <tr>
-                <th scope="row">3</th>
-                <td colspan="2">Larry the Bird </td>
+				<tr>
+					<th scope="row">3</th>
+					<td colspan="2">Larry the Bird</td>
+                    <td>{{ form_row(formfacture.total) }}</td>
 
-                <td>{{ form_row(formfacture.total) }}  </td>
-                {{ form_end(formfacture) }}
+					
+					{{ form_end(formfacture) }}
 
-            </tr>
+				</tr>
 
-            {{ form_start(formdetailfacture)  }}
+				{{ form_start(formdetailfacture)  }}
 
-            <tr>
-                <th colspan="4">{{ form_row(formdetailfacture.articles)  }}  </th>
-            </tr>
+				<tr>
+					<th colspan="4">{{ form_row(formdetailfacture.articles)  }}
+					</th>
+				</tr>
 
-            <tr>
-                <td>{{ form_row(formdetailfacture.quantite)  }}</td>
-                <td>{{ form_row(formdetailfacture.prix)  }}</td>
-                <td>{{ form_row(formdetailfacture.description , { 'value': 'hhhh' })  }}  </td>
-                <td><button type="submit" class="btn btn-primary"> Ajouter </button></td>
-            </tr>
+				<tr>
+					<td>{{ form_row(formdetailfacture.quantite)  }}</td>
+					<td>{{ form_row(formdetailfacture.prix)  }}</td>
+					<td>{{ form_row(formdetailfacture.description , { 'value': 'hhhh' })  }}
+					</td>
+					<td>
+						<button type="submit" class="btn btn-primary">
+							Ajouter
+						</button>
+					</td>
+				</tr>
 
-            {{ form_end(formdetailfacture) }}
-
-
-            <tr>
-                <td colspan="4">
-
-                <table border="1" width="100%">
-
-                    {% for detail in facture.factureArticles %}
-
-                    <tr>
-                        <td>{{ detail.id }} </td>
-                        <td>{{ detail.quantite }}</td>
-                        <td>{{ detail.prix }}</td>
-                        <td>  {{ detail.articles.description }}  </td>
-                    </tr>
-                    {% endfor %}
+				{{ form_end(formdetailfacture) }}
 
 
-                </table>
+				<tr>
+					<td colspan="4">
 
-                </td>
+						<table id="HTMLtoPDF" border="1" width="100%">
 
-            </tr>
+							{% for detail in facture.factureArticles %}
 
-            </tbody>
-        </table>
+								<tr>
+									<td>{{ detail.id }}
+									</td>
+									<td>{{ detail.quantite }}</td>
+									<td>{{ detail.prix }}</td>
+									<td>
+										{{ detail.articles.description }}
+									</td>
+									<td>
+										<a class="btn btn-danger delete-article" data-id="{{detail.id}}">Supprimer</a>
+									</td>
 
-    </div>
+								</tr>
+							{% endfor %}
+                                    
 
+						</table>
+                        <tr>
+                        {{ form_start(formfacture)  }}
+                        <td>total:{{ form_row(formfacture.total) }}	</td>
+                    	{{ form_end(formfacture) }}
+						
+					</tr>
+                    </td>
+				</tr>
 
+			</tbody>
+		</table>
+
+	</div>
+<script>
+const Infos = document.getElementById('HTMLtoPDF');
+
+if(Infos) {
+    Infos.addEventListener('click', e => {
+      if(e.target.className === 'btn btn-danger delete-article') {
+          if(confirm('Are you sure ? ')) {
+              const id = e.target.getAttribute('data-id');
+              fetch(`/facture/delete/${id}`, {
+                  method: 'DELETE'
+              }).then(res => window.location.reload());
+             
+          }``
+       }
+    });
+   }
+</script>
+
+<table border='1'>
+<tr>
+<td>{{ facture.total}}</td>
+</tr>
+</table>
 {% endblock %}

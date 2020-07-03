@@ -16,6 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 class FactureController extends AbstractController
 {
@@ -148,4 +149,18 @@ class FactureController extends AbstractController
             'formfacture' => $formfacture->createView()
         ]);
     }
+                    /** 
+                  * @Route("/facture/delete/{id}")
+                  * @Method({"DELETE"})
+                 */
+                public function delete(Request $request, $id ) {
+                    $detailfacture =$this->getDoctrine()->getRepository(FactureArticle::class)->find($id);
+                   
+                    $entitymanager = $this->getDoctrine()->getManager();
+                    $entitymanager->remove($detailfacture);
+                    $entitymanager->flush();
+
+                    $respone= new Response();
+                    $respone->send();
+                 }
 }
